@@ -261,11 +261,11 @@ $("#citySearch").on("click", function() {
     queryWeather(inputtext);
 });
 
-$(".cityButton").on("click", function() {
-    console.log("in button event handler...");
-    console.log("id of button = " + this.id);
-    // var buttontext = $("#" + this.id).text();
-    console.log("text in button = " + $("#" + this.id).text());
-    var inputtext = $("#" + this.id).text()
-    queryWeather(inputtext);
-});
+// $(".cityButton").on("click", function() {
+//     console.log("in button event handler...");
+//     console.log("id of button = " + this.id);
+//     // var buttontext = $("#" + this.id).text();
+//     console.log("text in button = " + $("#" + this.id).text());
+//     var inputtext = $("#" + this.id).text()
+//     queryWeather(inputtext);
+// });
