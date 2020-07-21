@@ -73,7 +73,7 @@ function queryWeather(inputtext) {
 }
 
 function queryUV(currentUVIndexvalue, lat, lon) {
-    var queryUVURL = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=" + lat + "&lon=" + lon;
+    var queryUVURL = "https://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=" + lat + "&lon=" + lon;
     console.log("in queryUV function");
 
     $.ajax({
