@@ -56,14 +56,15 @@ function queryWeather(inputtext) {
 
         $("#current").empty();
         // console.log("currentUVIndexvalue after clear = " + currentUVIndexvalue);
-        var currentCityName = $("<div>").text(currentCityNamevalue + " (" + currentDate + ") ").attr({ id: "currentCityName", float: "left", size: "30" }).addClass("currentCityName");
-        var currentTemp = $("<div>").text("Temperature - " + currentTempvalue + " °F").attr({ id: "currentTemp", float: "left", size: "30" }).addClass("currentTemp");
-        var currentHumidity = $("<div>").text("Humitity - " + currentHumidityvalue + " %").attr({ id: "currentHumidity", float: "left", size: "30" }).addClass("currentHumidity");
-        var currentWindSpeed = $("<div>").text("Wind Speed - " + currentWindSpeedvalue + " MPH").attr({ id: "currentWindSpeed", float: "left", size: "30" }).addClass("currentWindSpeed");
+        var currentCityName = $("<div>").text(currentCityNamevalue + " (" + currentDate + ") ").attr({ id: "currentCityName", float: "left" }).addClass("currentCityName");
+        var horzontalline = $("<hr>").attr({ id: "horzontalline" });
+        var currentTemp = $("<div>").text("Temperature - " + currentTempvalue + " °F").attr({ id: "currentTemp", float: "left" }).addClass("currentTemp");
+        var currentHumidity = $("<div>").text("Humitity - " + currentHumidityvalue + " %").attr({ id: "currentHumidity", float: "left" }).addClass("currentHumidity");
+        var currentWindSpeed = $("<div>").text("Wind Speed - " + currentWindSpeedvalue + " MPH").attr({ id: "currentWindSpeed", float: "left" }).addClass("currentWindSpeed");
         // // Creating a div container for currentTemp
         var containerTemp = $("<div>").attr({ id: "container", style: "font-size: 2vw" });
         // container.append(currentTemp);
-        containerTemp.append(currentCityName, currentTemp, currentHumidity, currentWindSpeed);
+        containerTemp.append(currentCityName, horzontalline, currentTemp, currentHumidity, currentWindSpeed);
         $("#current").append(containerTemp);
         queryUV(currentUVIndexvalue, lat, lon);
 
@@ -81,7 +82,7 @@ function queryUV(currentUVIndexvalue, lat, lon) {
 
         //console log response.value
         console.log("UV Index = " + response.value);
-        var currentUVIndex = $("<div>").text("UV Index - " + response.value).attr({ id: "currentUVIndex", float: "left", size: "30" }).addClass("currentUVIndex");
+        var currentUVIndex = $("<div>").text("UV Index - " + response.value).attr({ id: "currentUVIndex", float: "left" }).addClass("currentUVIndex");
         // // Creating a div container for currentTemp
         var containerUVIndex = $("<div>").attr({ id: "container", style: "font-size: 2vw" });
         // container.append(currentTemp);
@@ -139,33 +140,39 @@ function queryForcast(lat, lon) {
             console.log("response.daily[" + i + "].humidity = " + response.daily[i].humidity + "%");
             console.log("response.daily[" + i + "].weather[0].main = " + response.daily[i].weather[0].main);
 
-            forcastDate = $("<div>").text(monthTxt + "-" + day + "-" + year).attr({ id: "forcastDate", float: "left", size: "30" }).addClass("forcastDate");
+            forcastDate = $("<div>").text(monthTxt + "-" + day + "-" + year).attr({ id: "forcastDate", float: "left", style: "font-size: 2vw" }).addClass("forcastDate");
             forcastTemp = $("<div>").text("Temp: " + response.daily[i].temp.day + " °F").attr({ id: "forcastTemp", float: "left", size: "30" }).addClass("forcastTemp");
             forcastHumidity = $("<div>").text("Humidity: " + response.daily[i].humidity + "%").attr({ id: "forcastHumidity", float: "left", size: "30" }).addClass("forcastHumidity");
-            var containerforcastDate = $("<div>").attr({ id: "container", style: "font-size: 2vw" }).html("</br>");
+            // var containerforcastDate = $("<div>").attr({ id: "container", style: "font-size: 2vw" }).html("</br>");
             var containerforcastWeather = $("<div>").attr({ id: "container", style: "font-size: 1.5vw" });
-            containerforcastDate.append(forcastDate);
+            // containerforcastDate.append(forcastDate);
             containerforcastWeather.append(forcastTemp, forcastHumidity);
 
 
             if (i === 0) {
-                $("#t1").append(containerforcastDate);
+                // $("#t1").append(containerforcastDate);
+                $("#t1").append(forcastDate);
                 $("#text1").append(containerforcastWeather);
             }
             if (i === 1) {
-                $("#t2").append(containerforcastDate);
+                //     $("#t2").append(containerforcastDate);
+                $("#t2").append(forcastDate);
                 $("#text2").append(containerforcastWeather);
             }
             if (i === 2) {
-                $("#t3").append(containerforcastDate);
+                //     $("#t3").append(containerforcastDate);
+                $("#t3").append(forcastDate);
                 $("#text3").append(containerforcastWeather);
             }
             if (i === 3) {
-                $("#t4").append(containerforcastDate);
+                //     $("#t4").append(containerforcastDate);
+                $("#t4").append(forcastDate);
                 $("#text4").append(containerforcastWeather);
             }
             if (i === 4) {
-                $("#t5").append(containerforcastDate);
+                //     $("#t5").append(containerforcastDate);
+                $("#t5").append(forcastDate);
+
                 $("#text5").append(containerforcastWeather);
             }
 
@@ -200,7 +207,7 @@ function writePage() {
     // container.append(plannerTimes, plannerInput, plannerSave);
     container.append(textInput, cityInput, citySearch);
     $("#startdiv").append(container);
-    // $(".bg").css("background-image", "url('techbackground.jpg')");
+    $(".bg").css("background-image", "url('weather.jpg')");
 }
 
 // init function to pull cities if there are any and put onto page...

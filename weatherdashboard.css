@@ -4,9 +4,10 @@
 }
 
 body {
-    font-family: "Courier New", Courier, monospace;
+    font-family: Arial, Helvetica, sans-serif;
     width: 95vw;
     margin-left: 20px;
+    line-height: 1.4;
     /* text-align: center; */
 }
 
@@ -30,23 +31,21 @@ body {
 
 /* .jumbotron {
     margin-bottom: 0px;
-    background-image: url("techbackground.jpg");
+    background-image: url("weather.jpg");
     background-repeat: center no-repeat;
 } */
 
 .jumbotron h1 {
     color: black;
     font-size: 5vw;
+    padding: -200px 0;
 }
 
-.jumbotron h2 {
-    color: black;
-    font-size: 3vw;
-}
-
-.jumbotron p {
-    color: black;
-    font-size: 1.5vw;
+.jumbotron {
+    max-height: 100px;
+    padding: 0 0;
+    height: 100%;
+    width: 100%;
 }
 
 .textInput,
@@ -61,6 +60,13 @@ body {
     padding-top: 10px;
     padding-bottom: 10px;
     width: 20vw;
+}
+
+.col {
+    margin-left: -2px;
+    /* border-style: double; */
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .cityButton {
@@ -88,7 +94,12 @@ body {
 }
 
 .card-body {
-    padding: 1px;
+    position: relative;
+    padding: 5px;
+    background-color: blue;
+    color: white;
+    margin: -5px;
+    max-width: 220px;
 }
 
 .currentCityName {
@@ -101,7 +112,15 @@ body {
     margin: 15px;
 }
 
+.forcastDate {
+    margin: -100;
+}
+
 #rowmid {
     font-weight: 800;
     font-size: 3vw;
+}
+
+#horzontalline {
+    margin: 4px;
 }
