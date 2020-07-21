@@ -1,26 +1,27 @@
 // This is my API key... ""
 var APIKey = "e4509642d356f7d3b99ccfe567f88f02";
 var cities = [];
-var test = true;
+var test = false;
 var lat = 0;
 var lon = 0;
 
 function queryWeather(inputtext) {
 
+    console.log("in queryWeather...")
+
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + inputtext + "&units=Imperial&appid=" + APIKey;
-    console.log("queryURL = " + queryURL);
+    if (test) console.log("queryURL = " + queryURL);
 
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function(response) {
 
-        console.log("openweather response = " + JSON.stringify(response));
+        if (test) console.log("openweather response = " + JSON.stringify(response));
 
         let montharray = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
         const t = response.dt;
-        // console.log("t = " + t);
 
         let date = new Date(t * 1000);
         let year = date.getFullYear();
@@ -40,19 +41,19 @@ function queryWeather(inputtext) {
         var currentWindSpeedvalue = response.wind.speed;
         var currentCityNamevalue = response.name;
 
-        console.log("Date and Time = " + monthTxt + "-" + day + "-" + year + " " + hours.toString().padStart(2, '0') + ":" + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0'));
-        console.log("Temperature = " + response.main.temp + " °F");
-        console.log("Humidity = " + response.main.humidity + " %");
-        console.log("Wind Speed = " + response.wind.speed + " MPH");
-        console.log("City Name = " + currentCityName);
+        if (test) console.log("Date and Time = " + monthTxt + "-" + day + "-" + year + " " + hours.toString().padStart(2, '0') + ":" + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0'));
+        if (test) console.log("Temperature = " + response.main.temp + " °F");
+        if (test) console.log("Humidity = " + response.main.humidity + " %");
+        if (test) console.log("Wind Speed = " + response.wind.speed + " MPH");
+        if (test) console.log("City Name = " + currentCityName);
 
         var lat = response.coord.lat;
-        // console.log("lat = " + lat);
+        if (test) console.log("lat = " + lat);
         var lon = response.coord.lon;
-        // console.log("lon = " + lon);
+        if (test) console.log("lon = " + lon);
         var currentUVIndexvalue = 0;
 
-        // console.log("currentUVIndexvalue *** = " + currentUVIndexvalue);
+        if (test) console.log("currentUVIndexvalue *** = " + currentUVIndexvalue);
 
         $("#current").empty();
         // console.log("currentUVIndexvalue after clear = " + currentUVIndexvalue);
@@ -80,8 +81,10 @@ function queryUV(currentUVIndexvalue, lat, lon) {
         method: "GET"
     }).then(function(response) {
 
+        console.log("response from queryUVURL = ", response);
+
         //console log response.value
-        console.log("UV Index = " + response.value);
+        if (test) console.log("UV Index = " + response.value);
         var currentUVIndex = $("<div>").text("UV Index - " + response.value).attr({ id: "currentUVIndex", float: "left" }).addClass("currentUVIndex");
         // // Creating a div container for currentTemp
         var containerUVIndex = $("<div>").attr({ id: "container", style: "font-size: 2vw" });
@@ -98,8 +101,8 @@ function queryForcast(lat, lon) {
 
     console.log("in queryForcast...")
 
-    console.log("lat = " + lat);
-    console.log("lon = " + lon);
+    if (test) console.log("lat = " + lat);
+    if (test) console.log("lon = " + lon);
 
 
     var query2URL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=current,hourly,minutely&units=Imperial&appid=" + APIKey;
@@ -111,6 +114,8 @@ function queryForcast(lat, lon) {
 
         $(".card-title").empty();
         $(".card-text").empty();
+
+        if (test) console.log("response from onecall = ", response);
 
 
         let montharray = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
@@ -133,52 +138,28 @@ function queryForcast(lat, lon) {
             let seconds = date.getSeconds();
 
             // console.log("list["" + i + "].dt in human form = " + monthTxt + "-" + day + "-" + year + " " + hours.toString().padStart(2, '0') + ":" + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0'));
-            console.log("daily[" + i + "].dt in human form = " + monthTxt + "-" + day + "-" + year + " " + hours.toString().padStart(2, '0') + ":" + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0'));
+            if (test) console.log("daily[" + i + "].dt in human form = " + monthTxt + "-" + day + "-" + year + " " + hours.toString().padStart(2, '0') + ":" + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0'));
             // console.log("list[" + i + "].dt_txt in human form = " + response.list[i].dt_txt);
             // var averagetemp = (response.list.main.temp_min + response.list.main.temp_max) / 2;  
-            console.log("response.daily[" + i + "].temp.day = " + response.daily[i].temp.day + " deg F");
-            console.log("response.daily[" + i + "].humidity = " + response.daily[i].humidity + "%");
-            console.log("response.daily[" + i + "].weather[0].main = " + response.daily[i].weather[0].main);
+            if (test) console.log("response.daily[" + i + "].temp.day = " + response.daily[i].temp.day + " deg F");
+            if (test) console.log("response.daily[" + i + "].humidity = " + response.daily[i].humidity + "%");
+            if (test) console.log("response.daily[" + i + "].weather[0].main = " + response.daily[i].weather[0].main);
 
-            forcastDate = $("<div>").text(monthTxt + "-" + day + "-" + year).attr({ id: "forcastDate", float: "left", style: "font-size: 2vw" }).addClass("forcastDate");
-            forcastTemp = $("<div>").text("Temp: " + response.daily[i].temp.day + " °F").attr({ id: "forcastTemp", float: "left", size: "30" }).addClass("forcastTemp");
-            forcastHumidity = $("<div>").text("Humidity: " + response.daily[i].humidity + "%").attr({ id: "forcastHumidity", float: "left", size: "30" }).addClass("forcastHumidity");
+
+            var forcastIcon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + response.daily[i].weather[0].icon + ".png");
+
+            // var forcastIcon = $("<img>").attr('src="' + weathericon + '"');
+            var forcastDate = $("<div>").text(monthTxt + "-" + day + "-" + year).attr({ id: "forcastDate", float: "left", style: "font-size: 2vw" }).addClass("forcastDate");
+            var forcastTemp = $("<div>").text("Temp: " + response.daily[i].temp.day + " °F").attr({ id: "forcastTemp", float: "left", size: "30" }).addClass("forcastTemp");
+            var forcastHumidity = $("<div>").text("Humidity: " + response.daily[i].humidity + "%").attr({ id: "forcastHumidity", float: "left", size: "30" }).addClass("forcastHumidity");
             // var containerforcastDate = $("<div>").attr({ id: "container", style: "font-size: 2vw" }).html("</br>");
             var containerforcastWeather = $("<div>").attr({ id: "container", style: "font-size: 1.5vw" });
             // containerforcastDate.append(forcastDate);
-            containerforcastWeather.append(forcastTemp, forcastHumidity);
+            containerforcastWeather.append(forcastIcon, forcastTemp, forcastHumidity);
 
+            $("#t" + [i]).append(forcastDate);
+            $("#text" + [i]).append(containerforcastWeather);
 
-            if (i === 0) {
-                // $("#t1").append(containerforcastDate);
-                $("#t1").append(forcastDate);
-                $("#text1").append(containerforcastWeather);
-            }
-            if (i === 1) {
-                //     $("#t2").append(containerforcastDate);
-                $("#t2").append(forcastDate);
-                $("#text2").append(containerforcastWeather);
-            }
-            if (i === 2) {
-                //     $("#t3").append(containerforcastDate);
-                $("#t3").append(forcastDate);
-                $("#text3").append(containerforcastWeather);
-            }
-            if (i === 3) {
-                //     $("#t4").append(containerforcastDate);
-                $("#t4").append(forcastDate);
-                $("#text4").append(containerforcastWeather);
-            }
-            if (i === 4) {
-                //     $("#t5").append(containerforcastDate);
-                $("#t5").append(forcastDate);
-
-                $("#text5").append(containerforcastWeather);
-            }
-
-            // class="fa fa-sun-o" aria-hidden="true"
-            // class="fa fa-cloud" aria-hidden="true"
-            // class="fa fa-tint" aria-hidden="true"
         }
     });
 
@@ -228,10 +209,10 @@ function init(parameter) {
         }
     }
     $(".cityButton").on("click", function() {
-        console.log("in button event handler...");
-        console.log("id of button = " + this.id);
+        if (test) console.log("in button event handler...");
+        if (test) console.log("id of button = " + this.id);
         // var buttontext = $("#" + this.id).text();
-        console.log("text in button = " + $("#" + this.id).text());
+        if (test) console.log("text in button = " + $("#" + this.id).text());
         var inputtext = $("#" + this.id).text()
         queryWeather(inputtext);
         // queryForcast();
@@ -259,9 +240,7 @@ function loadbutton0() {
 
 }
 
-// queryWeather();
-// queryUV();
-// queryForcast();
+
 writeJumbo();
 writePage();
 init();
@@ -280,7 +259,6 @@ $("#citySearch").on("click", function() {
     $('#cityInputid').val('');
     saveCity(inputtext);
     queryWeather(inputtext);
-    // queryForcast();
 });
 
 $(".cityButton").on("click", function() {
@@ -290,5 +268,4 @@ $(".cityButton").on("click", function() {
     console.log("text in button = " + $("#" + this.id).text());
     var inputtext = $("#" + this.id).text()
     queryWeather(inputtext);
-    // queryForcast();
 });
