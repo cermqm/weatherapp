@@ -5,20 +5,21 @@ var test = false;
 var lat = 0;
 var lon = 0;
 
+// Function to query for weather - inputtext is the city user is searching for or text related to recently selected city
 function queryWeather(inputtext) {
 
     console.log("in queryWeather...")
 
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + inputtext + "&units=Imperial&appid=" + APIKey;
     if (test) console.log("queryURL = " + queryURL);
-
+    // API call for open weather - current forcast
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function(response) {
 
         if (test) console.log("openweather response = " + JSON.stringify(response));
-
+        // Formatting the date
         let montharray = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
         const t = response.dt;
@@ -35,6 +36,8 @@ function queryWeather(inputtext) {
         let minutes = date.getMinutes();
         let seconds = date.getSeconds();
 
+
+        // grabbing current weather from API response
         var currentDate = monthTxt + "-" + day + "-" + year + " " + hours.toString().padStart(2, '0') + ":" + minutes.toString().padStart(2, '0');
         var currentTempvalue = response.main.temp;
         var currentHumidityvalue = response.main.humidity;
@@ -47,6 +50,7 @@ function queryWeather(inputtext) {
         if (test) console.log("Wind Speed = " + response.wind.speed + " MPH");
         if (test) console.log("City Name = " + currentCityName);
 
+        // grabbing latitude and longitude from the response
         var lat = response.coord.lat;
         if (test) console.log("lat = " + lat);
         var lon = response.coord.lon;
@@ -55,6 +59,7 @@ function queryWeather(inputtext) {
 
         if (test) console.log("currentUVIndexvalue *** = " + currentUVIndexvalue);
 
+        // pushing tags to webpage and calling queryUV for UV index
         $("#current").empty();
         // console.log("currentUVIndexvalue after clear = " + currentUVIndexvalue);
         var currentCityName = $("<div>").text(currentCityNamevalue + " (" + currentDate + ") ").attr({ id: "currentCityName", float: "left" }).addClass("currentCityName");
@@ -72,9 +77,12 @@ function queryWeather(inputtext) {
     });
 }
 
+// Function to query open weather for UVIndex
 function queryUV(currentUVIndexvalue, lat, lon) {
     var queryUVURL = "https://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=" + lat + "&lon=" + lon;
     console.log("in queryUV function");
+
+    // API call for open weather - current UVIndex
 
     $.ajax({
         url: queryUVURL,
@@ -83,6 +91,7 @@ function queryUV(currentUVIndexvalue, lat, lon) {
 
         console.log("response from queryUVURL = ", response);
 
+        // write UVIndex to webpage
         //console log response.value
         if (test) console.log("UV Index = " + response.value);
         var currentUVIndex = $("<div>").text("UV Index - " + response.value).attr({ id: "currentUVIndex", float: "left" }).addClass("currentUVIndex");
@@ -96,7 +105,7 @@ function queryUV(currentUVIndexvalue, lat, lon) {
 
 };
 
-
+// function to query for the 5 day forcast - using lat and lon from queryWeather
 function queryForcast(lat, lon) {
 
     console.log("in queryForcast...")
@@ -106,6 +115,8 @@ function queryForcast(lat, lon) {
 
 
     var query2URL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=current,hourly,minutely&units=Imperial&appid=" + APIKey;
+
+    // API call for open weather - using the onecall api for 5 day forcast
 
     $.ajax({
         url: query2URL,
@@ -117,7 +128,7 @@ function queryForcast(lat, lon) {
 
         if (test) console.log("response from onecall = ", response);
 
-
+        // formatting the date
         let montharray = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
         for (let i = 0; i < 5; i++) {
@@ -137,24 +148,20 @@ function queryForcast(lat, lon) {
             let minutes = date.getMinutes();
             let seconds = date.getSeconds();
 
-            // console.log("list["" + i + "].dt in human form = " + monthTxt + "-" + day + "-" + year + " " + hours.toString().padStart(2, '0') + ":" + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0'));
+            // writing tags to webpage with jquery
             if (test) console.log("daily[" + i + "].dt in human form = " + monthTxt + "-" + day + "-" + year + " " + hours.toString().padStart(2, '0') + ":" + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0'));
-            // console.log("list[" + i + "].dt_txt in human form = " + response.list[i].dt_txt);
-            // var averagetemp = (response.list.main.temp_min + response.list.main.temp_max) / 2;  
+            if (test) console.log("list[" + i + "].dt_txt in human form = " + response.list[i].dt_txt);
             if (test) console.log("response.daily[" + i + "].temp.day = " + response.daily[i].temp.day + " deg F");
             if (test) console.log("response.daily[" + i + "].humidity = " + response.daily[i].humidity + "%");
             if (test) console.log("response.daily[" + i + "].weather[0].main = " + response.daily[i].weather[0].main);
 
-
+            // writing tags and content to webpage
             var forcastIcon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + response.daily[i].weather[0].icon + ".png");
 
-            // var forcastIcon = $("<img>").attr('src="' + weathericon + '"');
             var forcastDate = $("<div>").text(monthTxt + "-" + day + "-" + year).attr({ id: "forcastDate", float: "left", style: "font-size: 2vw" }).addClass("forcastDate");
             var forcastTemp = $("<div>").text("Temp: " + response.daily[i].temp.day + " °F").attr({ id: "forcastTemp", float: "left", size: "30" }).addClass("forcastTemp");
             var forcastHumidity = $("<div>").text("Humidity: " + response.daily[i].humidity + "%").attr({ id: "forcastHumidity", float: "left", size: "30" }).addClass("forcastHumidity");
-            // var containerforcastDate = $("<div>").attr({ id: "container", style: "font-size: 2vw" }).html("</br>");
             var containerforcastWeather = $("<div>").attr({ id: "container", style: "font-size: 1.5vw" });
-            // containerforcastDate.append(forcastDate);
             containerforcastWeather.append(forcastIcon, forcastTemp, forcastHumidity);
 
             $("#t" + [i]).append(forcastDate);
@@ -165,7 +172,7 @@ function queryForcast(lat, lon) {
 
 }
 
-// // Jumbtron to display title...
+// // writing Jumbtron to display title...
 function writeJumbo() {
     var jumbohtag = $("<h1>").attr({ id: "jumboh1" }).addClass("display-4").text("Weather Dashboard");
     var jumboContainer = $("<div>").attr({ id: "jumboContainer" }).addClass("container");
@@ -176,6 +183,7 @@ function writeJumbo() {
 
 }
 
+// write tags for search and recent city buttons
 function writePage() {
 
     // Adding input box
@@ -208,6 +216,7 @@ function init(parameter) {
             if (i >= "5") break;
         }
     }
+    // adding event listener for buttons
     $(".cityButton").on("click", function() {
         if (test) console.log("in button event handler...");
         if (test) console.log("id of button = " + this.id);
@@ -228,7 +237,7 @@ function saveCity(inputtext) {
     init();
 }
 
-
+// function to load last city
 function loadbutton0() {
 
     var citiesSaved = JSON.parse(localStorage.getItem("cities"));
@@ -247,7 +256,7 @@ init();
 loadbutton0();
 
 
-
+// event listener for search button
 $("#citySearch").on("click", function() {
     var inputtext = $("#cityInputid").val();
     var cityButton = $("<button>");
@@ -260,12 +269,3 @@ $("#citySearch").on("click", function() {
     saveCity(inputtext);
     queryWeather(inputtext);
 });
-
-// $(".cityButton").on("click", function() {
-//     console.log("in button event handler...");
-//     console.log("id of button = " + this.id);
-//     // var buttontext = $("#" + this.id).text();
-//     console.log("text in button = " + $("#" + this.id).text());
-//     var inputtext = $("#" + this.id).text()
-//     queryWeather(inputtext);
-// });
