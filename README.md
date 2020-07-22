@@ -13,10 +13,10 @@ At the bottom of the right side of the page is the 5 day forcast with the date, 
 
 Below are the screen shots of the app in action
 
-![Screen width of 640](640width_weatherdashboard.png)
-![Screen width of 760](760width_weatherdashboard.png)
-![Screen width of 960](960width_weatherdashboard_showing_new_city_button.png)
-![Screen width of 960](960width_weatherdashboard_with_city_search.png)
-![Screen width of 960](960width_weatherdashboard_with_diff_city.png)
-![Screen width of 960](960width_weatherdashboard_with_diff_city2.png)
-![Screen width of 960](960width_weatherdashboard.png)
+![Screen width of 640](./screenshots/640width_weatherdashboard.png)
+![Screen width of 760](./screenshots/760width_weatherdashboard.png)
+![Screen width of 960](./screenshots/960width_weatherdashboard_showing_new_city_button.png)
+![Screen width of 960](./screenshots/960width_weatherdashboard_with_city_search.png)
+![Screen width of 960](./screenshots/960width_weatherdashboard_with_diff_city.png)
+![Screen width of 960](./screenshots/960width_weatherdashboard_with_diff_city2.png)
+![Screen width of 960](./screenshots/960width_weatherdashboard.png)
