@@ -3,6 +3,10 @@ HW#6 Weather app
 
 This is our 6th homework.
 
+This is the git URL for the project - https://github.com/cermqm/weatherapp.
+
+This is the website URL for the project - https://cermqm.github.io/weatherapp/
+
 It felt harder than the last assignment mainly because I didn't have as much time to work on it.
 
 Functionality requested was to have a city search and store the most recient cities for future use.
